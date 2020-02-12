@@ -1,9 +1,10 @@
 <html>
   <body>
     <img id='mapimg' src='' style='background-color:green;' height="1272px"  width="1319px"/>
+    <!-- Above is green just to make widget visible when not loaded -->
   </body>
   <script>
-    updatemap("Austin, TX");
+    updatemap("Austin, TX"); //Just a default so testing on my laptop works
     
     function updatemap(location)
     {
@@ -27,6 +28,7 @@
         updatemap(weather.address.neighbourhood);
       }
     }
+    
     function httpGet(theUrl)
     {
       var xmlHttp = new XMLHttpRequest();
