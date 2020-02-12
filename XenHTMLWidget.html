@@ -1,0 +1,38 @@
+<html>
+  <body>
+    <img id='mapimg' src='' style='background-color:green;' height="1272px"  width="1319px"/>
+  </body>
+  <script>
+    updatemap("Austin, TX");
+    
+    function updatemap(location)
+    {
+      var locationh =  JSON.parse(httpGet("https://geocode.xyz/"+location+"?json=1"));
+      var longitudemap = Number(locationh.longt)-.25;
+      var latitutemap = Number(locationh.latt)-.25;
+      var longitudemap1 = Number(locationh.longt)+.25;
+      var latitutemap1 = Number(locationh.latt)+.25;
+      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width=1319&height=1272&size=50x70cm&apiKey=undefined";
+      console.log(longitudemap+" | "+latitutemap+" | "+uri);
+      var url = httpGet(uri);
+      url = "https://background-api.alvarcarto.com/render"+(url.substring(9,url.length-2));
+      console.log(url);
+      document.getElementById('mapimg').src= url;
+      console.log(document.getElementById('mapimg').src);
+    }
+    
+    function mainUpdate(type){
+      if(type == "weather")
+      {
+        updatemap(weather.address.neighbourhood);
+      }
+    }
+    function httpGet(theUrl)
+    {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", theUrl, false );
+      xmlHttp.send( null );
+      return xmlHttp.responseText;
+    }
+  </script>
+</html>
