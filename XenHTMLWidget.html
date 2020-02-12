@@ -8,11 +8,12 @@
     
     function updatemap(location)
     {
+      var size = .25;
       var locationh =  JSON.parse(httpGet("https://geocode.xyz/"+location+"?json=1"));
-      var longitudemap = Number(locationh.longt)-.25;
-      var latitutemap = Number(locationh.latt)-.25;
-      var longitudemap1 = Number(locationh.longt)+.25;
-      var latitutemap1 = Number(locationh.latt)+.25;
+      var longitudemap = Number(locationh.longt)-size;
+      var latitutemap = Number(locationh.latt)-size;
+      var longitudemap1 = Number(locationh.longt)+size;
+      var latitutemap1 = Number(locationh.latt)+size;
       var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width=1319&height=1272&size=50x70cm&apiKey=undefined";
       console.log(longitudemap+" | "+latitutemap+" | "+uri);
       var url = httpGet(uri);
