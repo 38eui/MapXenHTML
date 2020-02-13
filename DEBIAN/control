@@ -1,0 +1,6 @@
+Package: com.nickorlow.xenmap
+Name: XenMap
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description:  
+Author: Nick Orlowsky (38eui) <nickorlow@cavcash.com>

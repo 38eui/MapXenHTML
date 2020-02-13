@@ -1,42 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <array>
-    <dict>
-      <key>name</key>
-      <string>feed</string>
-      <key>type</key>
-      <string>select</string>
-      <key>label</key>
-      <string>Feed</string>
-      <key>default</key>
-      <string>News</string>
-      <key>options</key>
-       <dict>
-         <key>News</key>
-         <string>1</string>
-         <key>Gaming</key>
-         <string>2</string>
-       </dict>
+<array>
+	   <dict>
+          <key>name</key>
+          <string>MapWidth</string>
+          <key>type</key>
+          <string>edit</string>
+          <key>label</key>
+          <string>Width of the Map</string>
+          <key>default</key>
+          <string>1319</string>
     </dict>
     <dict>
-      <key>name</key>
-      <string>vMode</string>
-      <key>type</key>
-      <string>select</string>
-      <key>label</key>
-      <string>View Options</string>
-      <key>default</key>
-      <string>Hot</string>
-      <key>options</key>
-      <dict>
-         <key>Top</key>
-         <string>11</string>
-         <key>Hot</key>
-         <string>12</string>
-         <key>Rising</key>
-         <string>13</string>
-         <key>Controversial</key>
-         <string>14</string>
-       </dict>
-     </dict>    
-  </array>
+          <key>name</key>
+          <string>MapHeight</string>
+          <key>type</key>
+          <string>edit</string>
+          <key>label</key>
+          <string>Height of the Map</string>
+          <key>default</key>
+          <string>1272</string>
+    </dict>
+     <dict>
+          <key>name</key>
+          <string>MapZoom</string>
+          <key>type</key>
+          <string>edit</string>
+          <key>label</key>
+          <string>Zoom of the Map (higher is further out)</string>
+          <key>default</key>
+          <string>.25</string>
+    </dict>
+</array>
 </plist>

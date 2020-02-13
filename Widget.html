@@ -1,20 +1,28 @@
 <html>
+    <head>
+        <script type="text/javascript" src="JavaScript/jquery-1.2.6.min.js"></script>
+    </head>
   <body>
+    <!--  bg color being green is just for sizing it in XenHTML Preview--> 
     <img id='mapimg' src='' style='background-color:green;' height="1272px"  width="1319px"/>
-    <!-- Above is green just to make widget visible when not loaded -->
   </body>
   <script>
-    updatemap("Austin, TX"); //Just a default so testing on my laptop works
-    
+    var MapWidth= 1319; 
+    var MapHeight = 1272; 
+    var MapZoom = .25; 
+
+
+    document.getElementById('mapimg').width = MapWidth;
+    document.getElementById('mapimg').height = MapHeight;
+
     function updatemap(location)
     {
-      var size = .25;
       var locationh =  JSON.parse(httpGet("https://geocode.xyz/"+location+"?json=1"));
-      var longitudemap = Number(locationh.longt)-size;
-      var latitutemap = Number(locationh.latt)-size;
-      var longitudemap1 = Number(locationh.longt)+size;
-      var latitutemap1 = Number(locationh.latt)+size;
-      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width=1319&height=1272&size=50x70cm&apiKey=undefined";
+      var longitudemap = Number(locationh.longt)-MapZoom;
+      var latitutemap = Number(locationh.latt)-MapZoom;
+      var longitudemap1 = Number(locationh.longt)+MapZoom;
+      var latitutemap1 = Number(locationh.latt)+MapZoom;
+      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width="+MapWidth+"&height="+MapHeight+"&size=50x70cm&apiKey=undefined";
       console.log(longitudemap+" | "+latitutemap+" | "+uri);
       var url = httpGet(uri);
       url = "https://background-api.alvarcarto.com/render"+(url.substring(9,url.length-2));
@@ -30,6 +38,7 @@
         updatemap(weather.address.neighbourhood);
       }
     }
+
     
     function httpGet(theUrl)
     {
