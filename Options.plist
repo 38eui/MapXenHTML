@@ -46,7 +46,7 @@
 			<key>Orange</key>
               <string>bg-sunset</string>
 			<key>Grey</key>
-              <string> bg-gray</string>
+              <string>bg-gray</string>
 			<key>Dark Grey</key>
               <string>bg-darkgray</string>
 			<key>Black</key>
