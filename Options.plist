@@ -32,5 +32,26 @@
           <key>default</key>
           <string>.25</string>
     </dict>
+    <dict>
+          <key>name</key>
+          <string>MapStyle</string>
+          <key>type</key>
+          <string>select</string>
+          <key>label</key>
+          <string>Map Theme</string>
+          <key>default</key>
+          <string>Black</string>
+		 <key>options</key>
+		 <dict>
+			<key>Orange</key>
+              <string>bg-sunset</string>
+			<key>Grey</key>
+              <string> bg-gray</string>
+			<key>Dark Grey</key>
+              <string>bg-darkgray</string>
+			<key>Black</key>
+              <string>bg-black</string>
+		</dict>
+      </dict>
 </array>
 </plist>

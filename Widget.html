@@ -1,32 +1,38 @@
 <html>
   <body>
-    <!--  bg color being green is just for sizing it in XenHTML Preview--> 
-    <img id='mapimg' src='' style='background-color:green;' height="1272px"  width="1319px"/>
-    <div id = 'debug' style='visibility:hidden;'></p>
+    <!--  bg color being green is just for sizing it in XenHTML Preview, once loaded onto homescreen it should dissappear--> 
+    <img id='mapimg' alt='Install XenInfo - Ignore if it is already installed' style='background-color:green;'></img>
+    <div id = 'debug' style='visibility:hidden;'></p> <!-- Set visibility to visible, and below the map, there will be debug text-->
     <div id='zoom' style='visibility:hidden;'></div>
+    <div id='style' style='visibility:hidden;'></div>
+    <div id='lastloc' style='visibility:hidden;'></div>
   </body>
   <script>
     document.getElementById('mapimg').width = MapWidth;
     document.getElementById('mapimg').height = MapHeight;
     document.getElementById('zoom').innerHTML = MapZoom;
-
+    document.getElementById('style').innerHTML = MapStyle;
     function updatemap(location)
     {
+      //TODO: Clean this the heck up - also fix variable naming schemes
       debugmsg(location);
       var w =  Number(document.getElementById('mapimg').width);
       var h =  Number(document.getElementById('mapimg').height);
       var z = Number(document.getElementById('zoom').innerHTML);
+      var s = document.getElementById('style').innerHTML;
       var locationh =  JSON.parse(httpGet("https://geocode.xyz/"+location+"?json=1"));
       var longitudemap = Number(locationh.longt)-z;
       var latitutemap = Number(locationh.latt)-z;
       var longitudemap1 = Number(locationh.longt)+z;
       var latitutemap1 = Number(locationh.latt)+z;
-      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width="+w+ "&height="+h+"&size=50x70cm&apiKey=undefined";
+      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle="+s+"&width="+w+ "&height="+h+"&size=50x70cm&apiKey=undefined";
       debugmsg(longitudemap+" | "+latitutemap+" | "+uri);
       var url = httpGet(uri);
       url = "https://background-api.alvarcarto.com/render"+(url.substring(9,url.length-2));
       debugmsg(url);
-      document.getElementById('mapimg').src= url;
+      var img = new Image();
+      img.onload = function() { document.getElementById('mapimg').src= this.src; }
+      img.src = url;
       debugmsg(document.getElementById('mapimg').src);
     }
 
@@ -37,13 +43,17 @@
     
     function mainUpdate(type)
     {
-      if(type == "weather")
+      debugmsg("updatinglocation");
+      document.getElementById('mapimg').style = "";
+      document.getElementById('mapimg').alt = "";
+      if(type == "weather" && document.getElementById('lastloc').innerHTML != weather.address.city+" "+weather.address.state+", "+weather.address.zipCode)
       {
+        debugmsg("nocache");
+        document.getElementById('lastloc').innerHTML = weather.address.city+" "+weather.address.state+", "+weather.address.zipCode;
         updatemap(weather.address.city+" "+weather.address.state+", "+weather.address.zipCode);
       }
     }
 
-    
     function httpGet(theUrl)
     {
       var xmlHttp = new XMLHttpRequest();
