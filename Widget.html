@@ -5,37 +5,44 @@
   <body>
     <!--  bg color being green is just for sizing it in XenHTML Preview--> 
     <img id='mapimg' src='' style='background-color:green;' height="1272px"  width="1319px"/>
+    <div id = 'debug' style='visibility:hidden;'></p>
+    <div id='zoom' style='visibility:hidden;'></div>
   </body>
   <script>
-    var MapWidth= 1319; 
-    var MapHeight = 1272; 
-    var MapZoom = .25; 
-
-
     document.getElementById('mapimg').width = MapWidth;
     document.getElementById('mapimg').height = MapHeight;
+    document.getElementById('zoom').innerHTML = MapZoom;
 
     function updatemap(location)
     {
+      debugmsg(location);
+      var w =  Number(document.getElementById('mapimg').width);
+      var h =  Number(document.getElementById('mapimg').height);
+      var z = Number(document.getElementById('zoom').innerHTML);
       var locationh =  JSON.parse(httpGet("https://geocode.xyz/"+location+"?json=1"));
-      var longitudemap = Number(locationh.longt)-MapZoom;
-      var latitutemap = Number(locationh.latt)-MapZoom;
-      var longitudemap1 = Number(locationh.longt)+MapZoom;
-      var latitutemap1 = Number(locationh.latt)+MapZoom;
-      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width="+MapWidth+"&height="+MapHeight+"&size=50x70cm&apiKey=undefined";
-      console.log(longitudemap+" | "+latitutemap+" | "+uri);
+      var longitudemap = Number(locationh.longt)-z;
+      var latitutemap = Number(locationh.latt)-z;
+      var longitudemap1 = Number(locationh.longt)+z;
+      var latitutemap1 = Number(locationh.latt)+z;
+      var uri = "https://background-api.alvarcarto.com/render/api/raster/render-map?swLat="+latitutemap+"&swLng="+longitudemap+"&neLat="+latitutemap1+"&neLng="+longitudemap1+"&mapStyle=bg-black&width="+w+ "&height="+h+"&size=50x70cm&apiKey=undefined";
+      debugmsg(longitudemap+" | "+latitutemap+" | "+uri);
       var url = httpGet(uri);
       url = "https://background-api.alvarcarto.com/render"+(url.substring(9,url.length-2));
-      console.log(url);
+      debugmsg(url);
       document.getElementById('mapimg').src= url;
-      console.log(document.getElementById('mapimg').src);
+      debugmsg(document.getElementById('mapimg').src);
+    }
+
+    function debugmsg(s)
+    {
+        document.getElementById('debug').innerHTML += "\n"+s;
     }
     
     function mainUpdate(type)
     {
       if(type == "weather")
       {
-        updatemap(weather.address.neighbourhood);
+        updatemap(weather.address.city+" "+weather.address.state+", "+weather.address.zipCode);
       }
     }
 
